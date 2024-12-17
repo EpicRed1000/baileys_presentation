@@ -130,7 +130,7 @@ class ZombieGame:
         if "game_state" not in st.session_state:
             st.session_state.game_state = {
                 "current_room": "Camp Goodman",
-                "time_remaining": 12,
+                "time_remaining": 18,
                 "events_completed": set(),
                 "survivors_saved": set(),
                 "is_game_over": False,
@@ -143,7 +143,7 @@ class ZombieGame:
             'Camp Goodman': {
                 'exits': {'right': 'Drytron Mall'},
                 'description': "A once peaceful campground, now eerily quiet.",
-                'image': "./images/Contacts_github.png"
+                'image': "./images/Zombie_Camp.jpg"
             },
             'Drytron Mall': {
                 'exits': {
@@ -152,7 +152,7 @@ class ZombieGame:
                     'down': 'Amazement Land'
                 },
                 'description': "You walk past the empty stalls of the once-popular mall.",
-                'image': "./images/Drytronmall1.jpg",
+                'image': "./images/Zombie_Mall.jpg",
                 'event': {
                     'type': 'survivor',
                     'survivor': SurvivorEvent(
@@ -168,7 +168,7 @@ class ZombieGame:
                     'down': 'The Suburbs'
                 },
                 'description': "An auto repair shop littered with wrenches. Undead lurk near the lifts.",
-                'image': "./images/Contacts_github.png",
+                'image': "./images/Zombie_Car.jpg",
                 'event': {
                     'type': 'minigame',
                     'game': ZombieHordeGame(state_key = "zombie_horde_car_center"),
@@ -183,7 +183,7 @@ class ZombieGame:
                     'right': 'The Suburbs'
                 },
                 'description': "A work in progress theme park stands infront of you.",
-                'image': "./images/Contacts_gmail.png"
+                'image': "./images/Zombie_Park.jpg"
             },
             "The Suburbs": {
                 'exits': {
@@ -193,7 +193,7 @@ class ZombieGame:
                     'right': 'Virgil Hospital'
                 },
                 'description': "You see a street filled with empty cars and open home doors",
-                'image': "./images/Contacts_gmail.png",
+                'image': "./images/Zombie_Suburb.jpg",
                 'event': {
                     'type': 'minigame',
                     'game': ZombieHordeGame(state_key = "zombie_horde_suburbs"),
@@ -208,7 +208,7 @@ class ZombieGame:
                     'right': 'Easy Apartment'
                 },
                 'description': "One of the most popular spots by the beach is now empty",
-                'image': "./images/Contacts_github.png"
+                'image': "./images/Zombie_Saloon.jpg"
             },
             'Virgil Hospital': {
                 'exits': {
@@ -216,7 +216,7 @@ class ZombieGame:
                     'down': 'Easy Apartment'
                 },
                 'description': "Something something hospital.",
-                'image': "./images/Drytronmall1.jpg",
+                'image': "./images/Zombie_Hospital.jpg",
                 'event': {
                     'type': 'survivor',
                     'survivor': SurvivorEvent(
@@ -230,15 +230,15 @@ class ZombieGame:
                 'exits': {
                     'up':'Virgil Hospital',
                     'left': "Schuyler's Seaside Saloon",
-                    'right': 'Camp Goodman'
+                    'right': 'BKT Airport'
                 }, # Add a new event???
                 'description': "You heard about this place from an ad.",
-                'image': "./images/Contacts_gmail.png"
+                'image': "./images/Zombie_Apartment.jpg"
             },
             'BKT Airport': {
-                'exits': {},
+                'exits': {}, 
                 'description': "You've reached the evacuation point.",
-                'image': "./images/Contacts_github.png",
+                'image': "./images/Zombie_Airport.jpg",
                 'event': {
                     'type': 'ending',
                     'description': "You've made it to the airport!"
@@ -283,6 +283,7 @@ class ZombieGame:
             if survivor.was_successful:
                 st.session_state.game_state["time_remaining"] -= survivor.time_cost
                 st.session_state.game_state["survivors_saved"].add(survivor.survivor_name)
+                st.write(f'{survivor.cutscene_text}')
                 st.success(f"You saved {survivor.survivor_name}!")
                 # Optionally enable skipping after saving a survivor
                 st.session_state.game_state["can_skip"] = True
